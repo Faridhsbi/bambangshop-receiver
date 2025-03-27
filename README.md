@@ -77,7 +77,7 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   [V] Commit: `Implement receive function in Notification controller.`
     -   [V] Commit: `Implement list_messages function in Notification service.`
     -   [V] Commit: `Implement list function in Notification controller.`
-    -   [ ] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
+    -   [V] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
 
 ## Your Reflections
 This is the place for you to write reflections:
@@ -115,3 +115,15 @@ This is the place for you to write reflections:
     - Sedangkan Rust menegakkan keamanan thread sejak waktu kompilasi sehingga variabel global yang mutable harus dibungkus dalam primitif yang aman terhadap concurrency, seperti `RwLock`, yang memastikan semua akses sudah terjamin keamanannya tanpa pemeriksaan tambahan saat runtime.
 
 #### Reflection Subscriber-2
+
+1. > Have you explored things outside of the steps in the tutorial, for example: src/lib.rs? If not, explain why you did not do so. If yes, explain things that you have learned from those other parts of code.
+
+    Saya telah mengeksplorasi file di luar langkah-langkah tutorial, seperti `src/lib.rs` dan modul-modul terkait lainnya, yang memberikan saya pemahaman mendalam tentang cara inisialisasi konfigurasi global dan client HTTP secara thread-safe menggunakan `lazy_static`. Dari hasil eksplorasi tersebut, saya belajar bagaimana integrasi environment configuration dilakukan melalui penggunaan dotenvy dan Figment untuk menggabungkan variabel lingkungan dengan pengaturan default secara robust. Selain itu, pendekatan error handling yang konsisten dengan custom error type dan fungsi standar untuk response error turut meningkatkan keterbacaan serta konsistensi aplikasi secara keseluruhan. Secara keseluruhan, eksplorasi ini memperkuat pemahaman saya mengenai pemisahan concerns dan desain aplikasi yang scalable, yang sangat bermanfaat dalam pengembangan aplikasi web yang robust dan mudah dikelola.
+
+2. > Since you have completed the tutorial by now and have tried to test your notification system by spawning multiple instances of Receiver, explain how Observer pattern eases you to plug in more subscribers. How about spawning more than one instance of Main app, will it still be easy enough to add to the system?
+
+Pada tutorial ini, Observer pattern dengan model push memudahkan dalam penambahan subscriber baru karena publisher tidak perlu mengetahui detail implementasi tiap subscriber, setiap subscriber hanya perlu memenuhi antarmuka yang diharapkan, dan `NotificationService` secara otomatis mengirimkan notifikasi dengan cara mengiterasi daftar subscriber dan menjalankan `update()` pada masing-masing secara parallel menggunakan thread. Pendekatan ini memungkinkan skalabilitas tinggi, sehingga ketika ada penambahan instance pada Main App, masing-masing publisher dapat bekerja secara independen tanpa mengganggu mekanisme lainnya, meskipun untuk lingkungan terdistribusi mungkin diperlukan koordinasi tambahan seperti *message broker*.
+
+1. > Have you tried to make your own Tests, or enhance documentation on your Postman collection? If you have tried those features, tell us whether it is useful for your work (it can be your tutorial work or your Group Project).
+
+Saya telah mencoba untuk membuat test sendiri serta meningkatkan dokumentasi dalam Postman collection, yang terbukti sangat bermanfaat untuk memastikan setiap endpoint berjalan sesuai harapan. Dengan menulis unit dan integration tests, saya dapat secara otomatis memverifikasi alur notifikasi, penanganan data, dan respon error, sehingga memungkinkan deteksi masalah sedini mungkin. Peningkatan dokumentasi Postman dengan menambahkan deskripsi mendetail, contoh payload, dan skrip otomatisasi testing juga mempermudah pemahaman dan kolaborasi antar anggota tim, yang pada akhirnya meningkatkan keandalan sistem dan mendukung pengembangan aplikasi yang lebih efisien.
